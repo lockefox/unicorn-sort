@@ -11,7 +11,7 @@ with open("README.md", "r", "utf-8") as f:
     __readme__ = f.read()
 
 with open(HERE / __library_name__ / "VERSION", "r", "utf-8") as f:
-    __version__ = f.read()
+    __version__ = f.read().strip()
 
 setup(
     name=__package_name__,
