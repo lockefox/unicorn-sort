@@ -24,6 +24,6 @@ setup(
     packages=find_packages(),
     package_data={"": ["README"], __library_name__: ["VERSION"],},
     entry_points={"console_scripts": [f"unicorn={__library_name__}.cli:run",]},
-    install_requires=["plumbum",],
+    install_requires=["plumbum",], # "exifread", "canon-cr3"],
     extras_require={"dev": {"tox", "tox-travis", "black",}},
 )
