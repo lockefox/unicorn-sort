@@ -10,3 +10,4 @@ WORKDIR /opt/unicorn
 
 RUN pip3 install .[dev]
 
+WORKDIR /home/docker

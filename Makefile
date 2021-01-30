@@ -12,12 +12,12 @@ build: Dockerfile setup.py unicorn_sort/VERSION
 
 run: build
 	@docker run -it --rm \
-		--volume `pwd`:/opt/unicorn \
+		--volume `pwd`:/home/docker \
 		${DOCKER_IMAGE} \
 		/bin/bash
 
 black: build
 	@docker run --rm \
-		--volume `pwd`:/opt/unicorn \
+		--volume `pwd`:/home/docker \
 		${DOCKER_IMAGE} \
 		black -l 100 .
