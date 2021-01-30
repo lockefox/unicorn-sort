@@ -22,8 +22,23 @@ setup(
     author="John Purcell",
     author_email="jpurcell.ee@gmail.com",
     packages=find_packages(),
-    package_data={"": ["README"], __library_name__: ["VERSION"],},
-    entry_points={"console_scripts": [f"unicorn={__library_name__}.cli:run",]},
-    install_requires=["plumbum",], # "exifread", "canon-cr3"],
-    extras_require={"dev": {"tox", "tox-travis", "black",}},
+    package_data={
+        "": ["README"],
+        __library_name__: ["VERSION"],
+    },
+    entry_points={
+        "console_scripts": [
+            f"unicorn={__library_name__}.cli:run",
+        ]
+    },
+    install_requires=[
+        "plumbum",
+    ],  # "exifread", "canon-cr3"],
+    extras_require={
+        "dev": [
+            "tox",
+            "tox-travis",
+            "black",
+        ]
+    },
 )

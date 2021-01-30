@@ -1,6 +1,10 @@
 # unicorn-sort
 A tool for sorting and backing up RAW photo files between a drive/NAS
 
+Requires [exiftool](https://exiftool.org/)
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ## Setup
 
 CLI installable, or docker runable.  Designed and tested on a mac.

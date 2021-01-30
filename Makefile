@@ -15,3 +15,9 @@ run: build
 		--volume `pwd`:/opt/unicorn \
 		${DOCKER_IMAGE} \
 		/bin/bash
+
+black: build
+	@docker run --rm \
+		--volume `pwd`:/opt/unicorn \
+		${DOCKER_IMAGE} \
+		black -l 100 .
