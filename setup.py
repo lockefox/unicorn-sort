@@ -33,6 +33,7 @@ setup(
     },
     install_requires=[
         "plumbum",
+        "python-xmp-toolkit"
     ],  # "exifread", "canon-cr3"],
     extras_require={
         "dev": [
