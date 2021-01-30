@@ -2,7 +2,8 @@
 A tool for sorting and backing up RAW photo files between a drive/NAS
 
 Requires [exiftool](https://exiftool.org/)
-Requires [exempi](https://libopenraw.freedesktop.org/exempi/)
+Requires [exempi](https://libopenraw.freedesktop.org/exempi/) >= 2.2.0
+Requries [libnfs](https://github.com/sahlberg/libnfs)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 

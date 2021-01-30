@@ -31,10 +31,7 @@ setup(
             f"unicorn={__library_name__}.cli:run",
         ]
     },
-    install_requires=[
-        "plumbum",
-        "python-xmp-toolkit"
-    ],  # "exifread", "canon-cr3"],
+    install_requires=["plumbum", "python-xmp-toolkit", "libnfs"],  # "exifread", "canon-cr3"],
     extras_require={
         "dev": [
             "tox",
