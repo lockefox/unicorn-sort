@@ -1,5 +1,6 @@
 FROM ubuntu:focal
 
+ARG PROJECT_HOMEDIR
 RUN apt-get update && apt-get install -y \
 	exiftool \
 	exempi \
@@ -12,4 +13,4 @@ WORKDIR /opt/unicorn
 
 RUN pip3 install .[dev]
 
-WORKDIR /home/docker
+WORKDIR ${PROJECT_HOMEDIR}
