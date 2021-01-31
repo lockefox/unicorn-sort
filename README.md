@@ -22,3 +22,7 @@ Point unicorn at a volume mount, give it filter criteria, and a place to backup.
 2) copy `source-dir` to a nfs or smb location
 
 `unicorn` is a dumb script made for personal use.  Will stomp files if your naming scheme isn't unique.
+
+## Notes
+
+Canon: Unable to parse star ratings set in-camera
