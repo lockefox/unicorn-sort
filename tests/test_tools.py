@@ -32,7 +32,7 @@ def create_files(
     return host_dir
 
 
-def test_list_files_default(tmpdir):
+def test_list_files_default(tmp_path):
     """list_files"""
     test_files = [
         "test_file1.cr2",
@@ -44,9 +44,9 @@ def test_list_files_default(tmpdir):
     ]
     test_dirs = ["ignore_dir"]
 
-    create_files(tmpdir, test_files + extra_files, test_dirs)
+    create_files(tmp_path, test_files + extra_files, test_dirs)
 
-    files = tools.list_files(tmpdir)
+    files = tools.list_files(tmp_path)
 
-    file_list = set(file.name for file in files)
+    file_list = set(file.path.name for file in files)
     assert file_list == set(test_files)

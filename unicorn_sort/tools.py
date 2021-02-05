@@ -27,6 +27,6 @@ def list_files(file_pathlib: pathlib.Path, file_filter: list = None) -> typing.L
         file_filter = SUPPORTED_FILES
     return [
         image_file(file, file.stem, file.suffix.lower())
-        for file in file_pathlib
-        if file.isfile() and file.suffix.lower() in file_filter
+        for file in file_pathlib.iterdir()
+        if file.is_file() and file.suffix.lower() in file_filter
     ]
