@@ -25,3 +25,9 @@ black: build
 		--volume `pwd`:${HOMEDIR} \
 		${DOCKER_IMAGE} \
 		black -l 100 .
+
+test:
+	@docker run --rm \
+		--volume `pwd`:${HOMEDIR} \
+		${DOCKER_IMAGE} \
+		tox ${TOX_ARGS}
