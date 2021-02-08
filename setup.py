@@ -29,6 +29,7 @@ setup(
     entry_points={
         "console_scripts": [
             f"unicorn={__library_name__}.cli:run",
+            f"stashvid={__library_name__}.cli:run_stashvid",
         ]
     },
     install_requires=["plumbum", "python-xmp-toolkit", "libnfs"],  # "exifread", "canon-cr3"],

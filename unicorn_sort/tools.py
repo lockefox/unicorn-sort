@@ -23,8 +23,12 @@ SUPPORTED_FILES = [
 
 def list_files(file_pathlib: pathlib.Path, file_filter: list = None) -> typing.List[image_file]:
     """lists all files in a directory given a specific filter"""
-    if not file_filter:
+    if file_filter is None:
         file_filter = SUPPORTED_FILES
+
+    if not isinstance(file_filter, list):
+        raise TypeError(f"file_filter needs to be list(), was {type(file_filter)}")
+
     return [
         image_file(file, file.stem, file.suffix.lower())
         for file in file_pathlib.iterdir()
