@@ -13,6 +13,9 @@ Requries [libnfs](https://github.com/sahlberg/libnfs)
 
 CLI installable, or docker runable.  Designed and tested on a mac.
 
+
+## Unicorn
+
 ```bash
 unicorn --source-dir=... --stars=... --nfs=...
 ```
@@ -22,6 +25,16 @@ Point unicorn at a volume mount, give it filter criteria, and a place to backup.
 2) copy `source-dir` to a nfs or smb location
 
 `unicorn` is a dumb script made for personal use.  Will stomp files if your naming scheme isn't unique.
+
+
+## StashVid
+
+```bash
+stashvid --source-dir=... --dest-dir=...
+```
+
+Sorts out video files and moves them to their own directory.  Used to keep Adobe auto import previews from trying to render thumbnails on very large files.
+
 
 ## Notes
 

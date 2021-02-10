@@ -9,18 +9,27 @@ from plumbum import cli
 from . import __version__, tools
 
 __cli_name__ = "unicorn"
+__stash_vid__ = "stashvid"
 
 
 class BaseCLI(cli.Application):
     """parent class for CLIs"""
 
-    source_dir = cli.SwitchAttr(
-        "--source-dir",
+    # source_dir = cli.SwitchAttr(
+    #     "--source-dir",
+    #     str,
+    #     default=pathlib.Path(),
+    #     help="Folder full of images CR2/CR3/JPEG",
+    #     envname="UNICORN_SOURCE_DIR",
+    # )
+
+    @cli.autoswitch(
         str,
-        default=pathlib.Path(),
         help="Folder full of images CR2/CR3/JPEG",
         envname="UNICORN_SOURCE_DIR",
     )
+    def source_dir(self, source_path=pathlib.Path()):
+        self._source_dir = pathlib.Path(source_path)
 
     log_level = cli.SwitchAttr(
         "--log-level",
@@ -56,27 +65,31 @@ class BaseCLI(cli.Application):
 class StashVideo(BaseCLI):
     """mini cli: copy mp4s into their own folder"""
 
-    PROGNAME = "stashvid"
+    PROGNAME = __stash_vid__
     VERSION = __version__
 
-    dest_dir = cli.SwitchAttr(
-        "--dest-dir", str, default=pathlib.Path() / "VIDS", help="where to copy all mp4s"
-    )
+    _dest_dir = pathlib.Path() / "VIDS"
+
+    @cli.autoswitch(str, help="where to copy all mp4s")
+    def dest_dir(self, dest_path=_dest_dir):
+        self._dest_dir = pathlib.Path(dest_path)
 
     def main(self):
         self.logger.info("Hello World")
 
-        files = tools.list_files(self.source_dir, file_filter=[".mp4"])
-        self.logger.info(f"creating directory: {self.dest_dir.absolute()}")
-        self.dest_dir.mkdir(parents=True, exist_ok=True)
+        files = tools.list_files(self._source_dir, file_filter=[".mp4"])
+        self.logger.info(f"creating directory: {self._dest_dir.absolute()}")
+        self._dest_dir.mkdir(parents=True, exist_ok=True)
 
         count = 0
         for file in cli.terminal.Progress(files):
-            self.logger.debug(f"--moving {file.path.absolute()} -> {self.dest_dir}")
-            file.path.rename(self.dest_dir / file.path.name)
-            count += 1 # lazy, just do the iterator once
+            # self.logger.debug(f"--moving {file.path.absolute()} -> {self._dest_dir / file.path.name}")
+            print(f"--moving {file.path.absolute()} -> {self._dest_dir / file.path.name}")
+            file.path.rename(self._dest_dir / file.path.name)
+            count += 1  # lazy, just do the iterator once
 
-        print(f"Moved {count} files to {self.dest_dir.absolute()}")
+        print(f"Moved {count} files to {self._dest_dir.absolute()}")
+
 
 class UnicornCLI(BaseCLI):
     """Plumbum Application"""
