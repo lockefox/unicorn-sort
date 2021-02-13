@@ -38,7 +38,10 @@ class TestStashVid:
         create_files(tmp_path, move_files + stay_files, ignore_dirs)
 
         print(tmp_path.absolute())
-        self.stashvid(f"--source-dir={str(tmp_path.absolute())}")
+        self.stashvid(
+            f"--source-dir={str(tmp_path.absolute())}",
+            f"--dest-dir={str(tmp_path.absolute() / 'VIDS')}",
+        )
 
         print(list(file for file in (tmp_path / "VIDS").iterdir()))
         file_list = set([file.name for file in (tmp_path / "VIDS").iterdir() if file.is_file()])
