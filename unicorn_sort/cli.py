@@ -83,7 +83,9 @@ class StashVideo(BaseCLI):
 
         count = 0
         for file in cli.terminal.Progress(files):
-            self.logger.debug(f"--moving {file.path.absolute()} -> {self._dest_dir / file.path.name}")
+            self.logger.debug(
+                f"--moving {file.path.absolute()} -> {self._dest_dir / file.path.name}"
+            )
 
             file.path.rename(self._dest_dir / file.path.name)
             count += 1  # lazy, just do the iterator once

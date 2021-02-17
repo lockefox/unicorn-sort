@@ -6,6 +6,8 @@ from plumbum import local
 
 from unicorn_sort import __version__, cli
 
+## NOTE: Live CLI tests require both --source-dir and --dest-dir args to work with tmp_path
+
 
 class TestStashVid:
     stashvid = local[f'{os.environ["TOX_ENV_DIR"]}/bin/{cli.__stash_vid__}']
