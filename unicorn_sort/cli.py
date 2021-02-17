@@ -15,14 +15,6 @@ __stash_vid__ = "stashvid"
 class BaseCLI(cli.Application):
     """parent class for CLIs"""
 
-    # source_dir = cli.SwitchAttr(
-    #     "--source-dir",
-    #     str,
-    #     default=pathlib.Path(),
-    #     help="Folder full of images CR2/CR3/JPEG",
-    #     envname="UNICORN_SOURCE_DIR",
-    # )
-
     @cli.autoswitch(
         str,
         help="Folder full of images CR2/CR3/JPEG",

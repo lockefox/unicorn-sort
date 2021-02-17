@@ -4,6 +4,7 @@ import pathlib
 import typing
 
 from libxmp import XMPMeta, consts
+from parse import *
 from plumbum import local
 
 # Note, requires exiftool cli: https://exiftool.org/
@@ -43,29 +44,6 @@ def find_rating(file_pathlib: pathlib.Path, xmp_section: str = consts.XMP_NS_XMP
     """finds the `Rating` value for an image file"""
 
 
-# (
-#     'http://ns.adobe.com/xap/1.0/',
-#     '',
-#     '',
-#     {
-#         'VALUE_IS_URI': False,
-#         'IS_QUALIFIER': False,
-#         'HAS_QUALIFIERS': False,
-#         'HAS_LANG': False,
-#         'HAS_TYPE': False,
-#         'VALUE_IS_STRUCT': False,
-#         'VALUE_IS_ARRAY': False,
-#         'ARRAY_IS_ORDERED': False,
-#         'ARRAY_IS_ALT': False,
-#         'ARRAY_IS_ALTTEXT': False,
-#         'IS_ALIAS': False,
-#         'HAS_ALIASES': False,
-#         'IS_INTERNAL': False,
-#         'IS_STABLE': False,
-#         'IS_DERIVED': False,
-#         'IS_SCHEMA': True
-#     }
-# )
 xmp_keydata = namedtuple("XMPKeyData", ["xmp_const", "key", "value", "metadata"])
 
 
@@ -79,15 +57,34 @@ def parse_xmp(file_pathlib: pathlib.Path, xmp_section: str = consts.XMP_NS_XMP) 
     Returns:
         dict: key/value pairs frpm xmp
 
+    Notes:
+        dict value type not guaranteed.  Likely string
+
     """
     xmp = XMPMeta()
     with open(file_pathlib, "r") as f:
         xmp.parse_from_str(f.read())
 
+    # FIXME: this could be 1 thing, I'm sure
     attributes = [xmp_keydata(*x) for x in xmp if x[0] == xmp_section]
 
     return {x.key: x.value for x in attributes}
 
 
 def parse_exif(file_pathlib: pathlib.Path) -> dict:
-    """returns EXIF results"""
+    """returns EXIF results
+
+    Args:
+        file_pathlib (:obj:`pathlib.Path`): path to file
+
+    Returns:
+        dict: key/value pairs frpm exif data
+
+    Notes:
+        dict value type not guaranteed.  Likely string
+
+    """
+    exif_result = exiftool(file_pathlib)
+    results = [parse("{key}: {value}", x) for x in exif_result.splitlines()]
+
+    return {x["key"].strip(): x["value"].strip() for x in results}

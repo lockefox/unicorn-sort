@@ -32,7 +32,12 @@ setup(
             f"stashvid={__library_name__}.cli:run_stashvid",
         ]
     },
-    install_requires=["plumbum", "python-xmp-toolkit", "libnfs"],  # "exifread", "canon-cr3"],
+    install_requires=[
+        "plumbum",
+        "python-xmp-toolkit",
+        "libnfs",
+        "parse",
+    ],  # "exifread", "canon-cr3"],
     extras_require={
         "dev": [
             "tox",
