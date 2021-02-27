@@ -24,14 +24,22 @@ def test_list_files_default(tmp_path, create_files):
 
     file_list = set(file.path.name for file in files)
     assert file_list == set(test_files)
+
+
 @pytest.mark.parametrize(
     "filename,expected_rating",
-    [
-        ("7D2_1974.xmp", 3),
-        ("R5A_4552.xmp", 3)
-    ]
+    [("7D2_1974.xmp", 3), ("R5A_4552.xmp", 3)],
 )
 def test_parse_xmp(testdata, filename, expected_rating):
-    result = tools.parse_xmp(testdata/filename)
+    """tests parse_xmp default behavior"""
+    result = tools.parse_xmp(testdata / filename)
 
     assert result["xmp:Rating"] == str(expected_rating)
+
+
+@pytest.mark.parametrize("filename,expected_rating", [("7D2_1974.CR2", 0), ("R5A_4552.CR3", 0)])
+def test_parse_exif(testdata, filename, expected_rating):
+    """tests parse_exif default behavior"""
+    result = tools.parse_exif(testdata / filename)
+
+    assert result["Rating"] == str(expected_rating)

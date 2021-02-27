@@ -35,6 +35,7 @@ def create_files():
 
     return _create_files
 
+
 @pytest.fixture()
 def testdata():
     """returns tests/testdata directory"""

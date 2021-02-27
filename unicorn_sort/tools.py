@@ -87,4 +87,5 @@ def parse_exif(file_pathlib: pathlib.Path) -> dict:
     exif_result = exiftool(file_pathlib)
     results = [parse("{key}: {value}", x) for x in exif_result.splitlines()]
 
-    return {x["key"].strip(): x["value"].strip() for x in results}
+    # Note: some results are NoneType and need to be filtered out
+    return {x["key"].strip(): x["value"].strip() for x in results if x}
