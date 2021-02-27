@@ -6,33 +6,7 @@ import pytest
 from unicorn_sort import tools
 
 
-def create_files(
-    host_dir: pathlib.Path, test_files: list = None, test_dirs: list = None
-) -> pathlib.Path:
-    """helps build files for test case.
-
-    Args:
-        host_dir (:obj:`pathlib.Path`): pytest tmpdir handler
-        test_files (list): list of filenames to create
-        test_dirs (list: optional): list of dirnames to create
-
-    Returns:
-        pathlib.Path: path to host_dir
-
-    """
-    if not test_dirs:
-        test_dirs = []
-    for file in test_files:
-        with open(host_dir / file, "w") as f:
-            f.write("test_file")
-
-    for dirname in test_dirs:
-        (host_dir / dirname).mkdir()
-
-    return host_dir
-
-
-def test_list_files_default(tmp_path):
+def test_list_files_default(tmp_path, create_files):
     """list_files"""
     test_files = [
         "test_file1.cr2",
@@ -50,3 +24,14 @@ def test_list_files_default(tmp_path):
 
     file_list = set(file.path.name for file in files)
     assert file_list == set(test_files)
+@pytest.mark.parametrize(
+    "filename,expected_rating",
+    [
+        ("7D2_1974.xmp", 3),
+        ("R5A_4552.xmp", 3)
+    ]
+)
+def test_parse_xmp(testdata, filename, expected_rating):
+    result = tools.parse_xmp(testdata/filename)
+
+    assert result["xmp:Rating"] == str(expected_rating)

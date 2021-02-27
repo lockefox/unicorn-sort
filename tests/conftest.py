@@ -34,3 +34,8 @@ def create_files():
         return host_dir
 
     return _create_files
+
+@pytest.fixture()
+def testdata():
+    """returns tests/testdata directory"""
+    return pathlib.Path(__file__).resolve().parent / "testdata"
