@@ -10,6 +10,7 @@ from . import __version__, tools
 
 __cli_name__ = "unicorn"
 __stash_vid__ = "stashvid"
+__stash_jpeg__ = "stashjpeg"
 
 
 class BaseCLI(cli.Application):
@@ -85,6 +86,37 @@ class StashVideo(BaseCLI):
         print(f"Moved {count} files to {self._dest_dir.absolute()}")
 
 
+class StashJpeg(BaseCLI):
+    """mini cli: copy .jp[e]g files into their own folder"""
+
+    PROGNAME = __stash_jpeg__
+    VERSION = __version__
+
+    _dest_dir = pathlib.Path() / "JPEG"
+
+    @cli.autoswitch(str, help="where to copy all mp4s")
+    def dest_dir(self, dest_path=_dest_dir):
+        self._dest_dir = pathlib.Path(dest_path)
+
+    def main(self):
+        self.logger.info("Hello World")
+
+        files = tools.list_files(self._source_dir, file_filter=[".jpeg", ".jpg"])
+        self.logger.info(f"creating directory: {self._dest_dir.absolute()}")
+        self._dest_dir.mkdir(parents=True, exist_ok=True)
+
+        count = 0
+        for file in cli.terminal.Progress(files):
+            self.logger.debug(
+                f"--moving {file.path.absolute()} -> {self._dest_dir / file.path.name}"
+            )
+
+            file.path.rename(self._dest_dir / file.path.name)
+            count += 1  # lazy, just do the iterator once
+
+        print(f"Moved {count} files to {self._dest_dir.absolute()}")
+
+
 class UnicornCLI(BaseCLI):
     """Plumbum Application"""
 
@@ -134,6 +166,11 @@ def run():
 def run_stashvid():
     """console entry_point"""
     StashVideo.run()
+
+
+def run_stashjpeg():
+    """console entry_point"""
+    StashJpeg.run()
 
 
 if __name__ == "__main__":
