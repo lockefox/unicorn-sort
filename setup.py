@@ -13,7 +13,6 @@ with open("README.md", "r", "utf-8") as f:
 with open(HERE / __library_name__ / "VERSION", "r", "utf-8") as f:
     __version__ = f.read().strip()
 
-bad_global = 1
 setup(
     name=__package_name__,
     description="Helper for sorting and backing up photo file dumps",
